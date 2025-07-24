@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcService1";
+
+package demo;
+
+// Demo service für Flutter Integration
+service DemoService {
+  // Einfache Begrüßung
+  rpc GetGreeting (GreetingRequest) returns (GreetingResponse);
+  
+  // Benutzerinformationen abrufen
+  rpc GetUserInfo (UserRequest) returns (UserResponse);
+  
+  // Liste von Produkten abrufen
+  rpc GetProducts (ProductsRequest) returns (ProductsResponse);
+  
+  // Server-Zeit abrufen
+  rpc GetServerTime (Empty) returns (TimeResponse);
+  
+  // Streaming: Server sendet mehrere Nachrichten
+  rpc GetLiveUpdates (Empty) returns (stream UpdateMessage);
+}
+
+// Leere Nachricht
+message Empty {}
+
+// Begrüßungsanfrage
+message GreetingRequest {
+  string name = 1;
+  string language = 2;
+}
+
+// Begrüßungsantwort
+message GreetingResponse {
+  string message = 1;
+  string timestamp = 2;
+}
+
+// Benutzeranfrage
+message UserRequest {
+  int32 user_id = 1;
+}
+
+// Benutzerantwort
+message UserResponse {
+  int32 id = 1;
+  string name = 2;
+  string email = 3;
+  string role = 4;
+  bool is_active = 5;
+}
+
+// Produktanfrage
+message ProductsRequest {
+  string category = 1;
+  int32 limit = 2;
+}
+
+// Produktantwort
+message ProductsResponse {
+  repeated Product products = 1;
+  int32 total_count = 2;
+}
+
+// Produkt
+message Product {
+  int32 id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+  string category = 5;
+  bool in_stock = 6;
+}
+
+// Zeitantwort
+message TimeResponse {
+  string current_time = 1;
+  string timezone = 2;
+  int64 timestamp_unix = 3;
+}
+
+// Update-Nachricht für Streaming
+message UpdateMessage {
+  string id = 1;
+  string message = 2;
+  string timestamp = 3;
+  string type = 4;
+}
